@@ -1,0 +1,50 @@
+cabal-version:      3.0
+name:               Taskell
+version:            0.1.0.0
+
+license:            BSD-3-Clause
+license-file:       LICENSE
+author:             lcssz
+maintainer:         lcsszsoares@gmail.com
+category:           Data
+build-type:         Simple
+extra-doc-files:    CHANGELOG.md
+
+common warnings
+    ghc-options: -Wall
+
+library
+    import:           warnings
+    exposed-modules:
+      CLI.DeadlineMenu
+      CLI.Interface
+      CLI.FiltersMenu
+      CLI.PersistenceMenu
+      CLI.TaskManagerMenu
+      Types
+      Filters
+      Persistence
+      TaskManager
+      Deadline
+    build-depends:    base ^>=4.20.0.0, time, directory, filepath, split
+    hs-source-dirs:   src
+    default-language: Haskell2010
+
+executable Taskell
+    import:           warnings
+    main-is:          Main.hs
+    build-depends:
+        base ^>=4.20.0.0,
+        Taskell
+    hs-source-dirs:   app
+    default-language: Haskell2010
+
+test-suite Taskell-test
+    import:           warnings
+    default-language: Haskell2010
+    type:             exitcode-stdio-1.0
+    hs-source-dirs:   test
+    main-is:          Main.hs
+    build-depends:
+        base ^>=4.20.0.0,
+        Taskell
