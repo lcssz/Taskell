@@ -24,7 +24,6 @@ library
       Types
       Filters
       Persistence
-      TaskManager
       Deadline
     build-depends:    base ^>=4.20.0.0, time, directory, filepath, split
     hs-source-dirs:   src

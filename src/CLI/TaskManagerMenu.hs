@@ -2,7 +2,6 @@ module CLI.TaskManagerMenu (taskManagerMenu) where
 
 import Data.List.Split (splitOn)
 import Data.Time (Day)
-import TaskManager (addTask, createTask, markCompleted, removeTask)
 import Text.Read (readMaybe)
 import Types
 
@@ -109,7 +108,7 @@ getStatus = do
   putStrLn "Status da tarefa:"
   putStrLn "1 - Pendente | 2 - Concluída"
   putStr "Escolha: "
-  input <- readMaybe <$> getLine
+  input <- readMaybe <$> getLine :: IO (Maybe Int)
   case input of
     Just 1 -> return (Just Pending)
     Just 2 -> return (Just Completed)
@@ -122,7 +121,7 @@ getPriority = do
   putStrLn "Prioridade da tarefa:"
   putStrLn "1 - Baixa | 2 - Média | 3 - Alta"
   putStr "Escolha: "
-  input <- readMaybe <$> getLine
+  input <- readMaybe <$> getLine :: IO (Maybe Int)
   case input of
     Just 1 -> return (Just Low)
     Just 2 -> return (Just Medium)
@@ -136,7 +135,7 @@ getCategory = do
   putStrLn "Categoria da tarefa:"
   putStrLn "1 - Trabalho | 2 - Estudo | 3 - Pessoal | 4 - Outro"
   putStr "Escolha: "
-  input <- readMaybe <$> getLine
+  input <- readMaybe <$> getLine :: IO (Maybe Int)
   case input of
     Just 1 -> return (Just Work)
     Just 2 -> return (Just Study)

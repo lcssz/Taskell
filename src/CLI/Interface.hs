@@ -49,9 +49,9 @@ showTaskReport tasks = do
       let studyTasks = length (categoryFilter Study tasks)
       let personalTasks = length (categoryFilter Personal tasks)
       let otherTasks = length (categoryFilter Other tasks)
-      putStrLn $ " * Trabalho: " ++ show workTasks ++ " (" ++ show (fromIntegral workTasks / fromIntegral totalTasks * 100) ++ "%)"
-      putStrLn $ " * Estudo: " ++ show studyTasks ++ " (" ++ show (fromIntegral studyTasks / fromIntegral totalTasks * 100) ++ "%)"
-      putStrLn $ " * Pessoal: " ++ show personalTasks ++ " (" ++ show (fromIntegral personalTasks / fromIntegral totalTasks * 100) ++ "%)"
-      putStrLn $ " * Outros: " ++ show otherTasks ++ " (" ++ show (fromIntegral otherTasks / fromIntegral totalTasks * 100) ++ "%)"
+      putStrLn $ " * Trabalho: " ++ show workTasks ++ " (" ++ show ((fromIntegral workTasks / fromIntegral totalTasks * 100) :: Double) ++ "%)"
+      putStrLn $ " * Estudo: " ++ show studyTasks ++ " (" ++ show ((fromIntegral studyTasks / fromIntegral totalTasks * 100) :: Double) ++ "%)"
+      putStrLn $ " * Pessoal: " ++ show personalTasks ++ " (" ++ show ((fromIntegral personalTasks / fromIntegral totalTasks * 100) :: Double) ++ "%)"
+      putStrLn $ " * Outros: " ++ show otherTasks ++ " (" ++ show ((fromIntegral otherTasks / fromIntegral totalTasks * 100) :: Double) ++ "%)"
     else putStrLn $ "Nenhuma tarefa cadastrada."
   return tasks
