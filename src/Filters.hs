@@ -6,22 +6,22 @@ import Data.Ord (comparing)
 import Types
 
 categoryFilter :: Category -> [Task] -> [Task]
-categoryFilter = filter . (. category) . (==)
+categoryFilter cat = filter (\task -> category task == cat)
 
 priorityFilter :: Priority -> [Task] -> [Task]
-priorityFilter = filter . (. priority) . (==)
+priorityFilter prio = filter (\task -> priority task == prio)
 
 prioritySorter :: [Task] -> [Task]
 prioritySorter = sortBy (comparing priority)
 
 filterByStatus :: Status -> [Task] -> [Task]
-filterByStatus = filter . (. status) . (==)
+filterByStatus stat = filter (\task -> status task == stat)
 
 toLowerStr :: String -> String
 toLowerStr = map toLower
 
 keywordSearch :: String -> [Task] -> [Task]
-keywordSearch = filter . (. (toLowerStr . description)) . isInfixOf . toLowerStr
+keywordSearch keyword = filter (\task -> isInfixOf (toLowerStr keyword) (toLowerStr (description task)))
 
 tagFilter :: String -> [Task] -> [Task]
-tagFilter = filter . (. tags) . elem
+tagFilter tag = filter (\task -> elem tag (tags task))
