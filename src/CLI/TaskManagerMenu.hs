@@ -1,6 +1,5 @@
 module CLI.TaskManagerMenu (taskManagerMenu) where
 
-import Data.List.Split (splitOn)
 import Data.Time (Day)
 import Text.Read (readMaybe)
 import Types
@@ -163,4 +162,11 @@ getTags = do
   tagsStr <- getLine
   if null tagsStr
     then return Nothing
-    else return $ Just (splitOn "," tagsStr)
+    else return $ Just (parseTags tagsStr)
+  where
+    parseTags :: String -> [String]
+    parseTags input =
+      let (tag, rest) = break (== ',') input
+       in case rest of
+            [] -> [tag]
+            (_ : xs) -> tag : parseTags xs
