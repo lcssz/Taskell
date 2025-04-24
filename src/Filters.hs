@@ -1,7 +1,7 @@
-module Filters (categoryFilter, priorityFilter, prioritySorter, filterByStatus, keywordSearch, tagFilter) where
+module Filters (categoryFilter, priorityFilter, prioritySorter, statusFilter, keywordSearch, tagFilter, tagCloud) where
 
 import Data.Char (toLower)
-import Data.List (isInfixOf, sortBy)
+import Data.List (group, isInfixOf, sort, sortBy)
 import Data.Ord (comparing)
 import Types
 
@@ -14,8 +14,8 @@ priorityFilter prio = filter (\task -> priority task == prio)
 prioritySorter :: [Task] -> [Task]
 prioritySorter = sortBy (comparing priority)
 
-filterByStatus :: Status -> [Task] -> [Task]
-filterByStatus stat = filter (\task -> status task == stat)
+statusFilter :: Status -> [Task] -> [Task]
+statusFilter stat = filter (\task -> status task == stat)
 
 toLowerStr :: String -> String
 toLowerStr = map toLower
@@ -25,3 +25,10 @@ keywordSearch keyword = filter (\task -> isInfixOf (toLowerStr keyword) (toLower
 
 tagFilter :: String -> [Task] -> [Task]
 tagFilter tag = filter (\task -> elem tag (tags task))
+
+tagCloud :: [Task] -> [(String, Int)]
+tagCloud tasks =
+  let allTags = concatMap tags tasks
+      sortedTags = sort allTags
+      groupedTags = group sortedTags
+   in map (\g -> (head g, length g)) groupedTags

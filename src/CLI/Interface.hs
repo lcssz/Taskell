@@ -4,7 +4,7 @@ import CLI.DeadlineMenu (deadlineMenu)
 import CLI.FiltersMenu (filtersMenu)
 import CLI.PersistenceMenu (persistenceMenu)
 import CLI.TaskManagerMenu (taskManagerMenu)
-import Filters (categoryFilter, filterByStatus)
+import Filters (categoryFilter, statusFilter)
 import System.Exit (exitSuccess)
 import System.IO (BufferMode (NoBuffering), hSetBuffering, stdin)
 import Types
@@ -39,8 +39,8 @@ showTaskReport tasks = do
   putStrLn "Relatório Resumido:"
   let totalTasks = length tasks
   putStrLn $ " - Total de tarefas: " ++ show totalTasks
-  let pendingTasks = length (filterByStatus Pending tasks)
-  let completedTasks = length (filterByStatus Completed tasks)
+  let pendingTasks = length (statusFilter Pending tasks)
+  let completedTasks = length (statusFilter Completed tasks)
   putStrLn $ " - Pendentes: " ++ show pendingTasks ++ " | Concluídas: " ++ show completedTasks
   if totalTasks > 0
     then do

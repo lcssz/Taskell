@@ -6,7 +6,7 @@ Um gerenciador de tarefas simples com persistência de dados via linha de comand
 
 - Haskell GHC (>=8.10)
 - Cabal e/ou Stack
-- Pacotes necessários: `time`, `directory`, `filepath`, `split`, `QuickCheck` 
+- Pacotes necessários: `time`, `directory`, `filepath`, `QuickCheck` 
 
 ## Compilar e Executar
 
