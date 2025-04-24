@@ -4,6 +4,11 @@ import Data.Time (getCurrentTime, utctDay)
 import Deadline (checkOverdueTasks, remainingDays)
 import Types
 
+{-
+Menu de gestão de prazos
+- Recebe: Lista atual de tarefas
+- Retorna: IO [Task] (lista original)
+-}
 deadlineMenu :: [Task] -> IO [Task]
 deadlineMenu tasks = do
   putStrLn "\ESC[33mGestão de Prazos."
@@ -19,6 +24,11 @@ deadlineMenu tasks = do
     "3" -> return tasks
     _ -> putStrLn "Operação inválida" >> deadlineMenu tasks
 
+{-
+Exibe tarefas com prazos expirados
+- Recebe: Lista de tarefas
+- Retorna: IO [Task] (lista original)
+-}
 showOverdueTasks :: [Task] -> IO [Task]
 showOverdueTasks tasks = do
   currentDay <- utctDay <$> getCurrentTime
@@ -28,6 +38,11 @@ showOverdueTasks tasks = do
     else mapM_ print overdue
   deadlineMenu tasks
 
+{-
+Exibe dias restantes para cada tarefa
+- Recebe: Lista de tarefas
+- Retorna: IO [Task] (lista original)
+-}
 showRemainingDays :: [Task] -> IO [Task]
 showRemainingDays tasks = do
   currentDay <- utctDay <$> getCurrentTime

@@ -13,6 +13,11 @@ import Filters
 import Text.Read (readMaybe)
 import Types
 
+{-
+Menu de filtros avançados
+- Recebe: Lista atual de tarefas
+- Retorna: IO [Task] (lista original - filtros não são persistentes)
+-}
 filtersMenu :: [Task] -> IO [Task]
 filtersMenu tasks = do
   putStrLn "\ESC[33mFiltros Avançados."
@@ -38,6 +43,14 @@ filtersMenu tasks = do
     "8" -> return tasks
     _ -> putStrLn "Operação inválida" >> filtersMenu tasks
 
+{-
+Fluxos de filtros específicos:
+Padrão comum:
+- Recebem: Lista de tarefas
+- Retornam: IO [Task] (sempre a lista original)
+Aplicar filtro e exibir resultados sem modificar lista original
+-}
+
 -- Fluxo para filtro de categoria
 categoryFilterFlow :: [Task] -> IO [Task]
 categoryFilterFlow tasks = do
@@ -55,7 +68,7 @@ categoryFilterFlow tasks = do
     showFiltered filtered = do
       putStrLn "\nTarefas filtradas:"
       mapM_ print filtered
-      filtersMenu tasks -- Mantém a lista original
+      filtersMenu tasks
 
 -- Fluxo para filtro de prioridade
 priorityFilterFlow :: [Task] -> IO [Task]
@@ -105,6 +118,14 @@ keywordFilterFlow tasks = do
       mapM_ print filtered
   filtersMenu tasks
 
+-- Fluxo para ordenação por prioridade
+prioritySortFlow :: [Task] -> IO [Task]
+prioritySortFlow tasks = do
+  let sorted = prioritySorter tasks
+  putStrLn "\nTarefas ordenadas por prioridade:"
+  mapM_ print sorted
+  filtersMenu tasks
+
 -- Fluxo para filtro de tag
 tagFilterFlow :: [Task] -> IO [Task]
 tagFilterFlow tasks = do
@@ -124,12 +145,4 @@ tagCloudFlow tasks = do
   putStrLn "\ESC[34mNuvem de Tags:\ESC[0m"
   let cloud = tagCloud tasks
   mapM_ (\(tag, count) -> putStrLn $ "  " ++ tag ++ " (" ++ show count ++ ")") cloud
-  filtersMenu tasks
-
--- Fluxo para ordenação por prioridade
-prioritySortFlow :: [Task] -> IO [Task]
-prioritySortFlow tasks = do
-  let sorted = prioritySorter tasks
-  putStrLn "\nTarefas ordenadas por prioridade:"
-  mapM_ print sorted
   filtersMenu tasks

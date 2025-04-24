@@ -9,6 +9,12 @@ import System.Exit (exitSuccess)
 import System.IO (BufferMode (NoBuffering), hSetBuffering, stdin)
 import Types
 
+{-
+Menu principal da aplicação
+- Recebe: Lista atual de tarefas
+- Retorna: IO [Task] (lista atualizada por submenus)
+Gerencia toda lógica de redirecionamento para submenus e saída do programa
+-}
 mainMenu :: [Task] -> IO [Task]
 mainMenu tasks = do
   hSetBuffering stdin NoBuffering
@@ -34,6 +40,16 @@ mainMenu tasks = do
       putStrLn "Operação inválida"
       return tasks
 
+{-
+Gera relatório estatístico
+- Recebe: Lista de tarefas
+- Retorna: IO [Task] (mesma lista)
+- Propósito: Exibir métricas sobre:
+  - Total de tarefas
+  - Distribuição por status
+  - Distribuição por categoria (com porcentagens)
+Exibição formatada exigida no console
+-}
 showTaskReport :: [Task] -> IO [Task]
 showTaskReport tasks = do
   putStrLn "Relatório Resumido:"

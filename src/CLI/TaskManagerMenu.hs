@@ -4,6 +4,11 @@ import Data.Time (Day)
 import Text.Read (readMaybe)
 import Types
 
+{-
+Menu principal do gerenciador de tarefas
+- Recebe: Lista atual de tarefas
+- Retorna: IO [Task] (lista atualizada ou original)
+-}
 taskManagerMenu :: [Task] -> IO [Task]
 taskManagerMenu tasks = do
   putStrLn "\ESC[33mGerenciador de Tarefas."
@@ -21,7 +26,10 @@ taskManagerMenu tasks = do
     "4" -> return tasks
     _ -> putStrLn "Operação inválida" >> taskManagerMenu tasks
 
--- Fluxo para adicionar tarefa
+{-
+- Recebe: Lista atual de tarefas
+- Retorna: IO [Task] (lista com nova tarefa adicionada)
+-}
 addTaskFlow :: [Task] -> IO [Task]
 addTaskFlow tasks = do
   maybeId <- getTaskId tasks
@@ -42,7 +50,11 @@ addTaskFlow tasks = do
       putStrLn "Erro: Dados inválidos para criação da tarefa!"
       taskManagerMenu tasks
 
--- Fluxo para remover tarefa
+{-
+Fluxo de remoção de tarefa
+- Recebe: Lista atual de tarefas
+- Retorna: IO [Task] (lista sem a tarefa removida)
+-}
 removeTaskFlow :: [Task] -> IO [Task]
 removeTaskFlow tasks = do
   print tasks
@@ -59,7 +71,11 @@ removeTaskFlow tasks = do
         else taskManagerMenu tasks
     Nothing -> taskManagerMenu tasks
 
--- Fluxo para marcar tarefa como concluída
+{-
+Fluxo para marcar tarefa como concluída
+- Recebe: Lista atual de tarefas
+- Retorna: IO [Task] (lista com tarefa atualizada)
+-}
 markCompletedFlow :: [Task] -> IO [Task]
 markCompletedFlow tasks = do
   print tasks
@@ -76,7 +92,12 @@ markCompletedFlow tasks = do
         else taskManagerMenu tasks
     Nothing -> taskManagerMenu tasks
 
--- Funções auxiliares para obter e validar dados
+{-
+Funções auxiliares de input:
+- Todas seguem o padrão:
+  - Recebem: Nenhum parâmetro explícito (interação via IO)
+  - Retornam: IO (Maybe Tipo) - Just valor válido ou Nothing para inválido
+-}
 getTaskId :: [Task] -> IO (Maybe Int)
 getTaskId tasks = do
   putStr "Digite o ID da Task: "
